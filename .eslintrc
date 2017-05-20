@@ -1,0 +1,13 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    "__ONBUILD_REACT_PERF__": true,
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "jest": true,
+    "expect": true
+  },
+  "parser": "babel-eslint"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "quiver-tab-dialog",
+  "version": "1.0.0",
+  "description": "<%= componentName %> - React component",
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
+  "scripts": {
+    "prepublish": "builder run build",
+    "build": "builder run build",
+    "start": "builder run serve:playground",
+    "tdd": "builder run test:all:watch",
+    "pretest": "builder run lint",
+    "test": "builder run test:all:coverage",
+    "lint": "builder run lint",
+    "release": "builder run release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+<%= repoUrl %>"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "<%= componentName %>",
+    "seed"
+  ],
+  "author": "<%= author %>",
+  "license": "MIT",
+  "bugs": {
+    "url": "<%= repoUrl %>/issues"
+  },
+  "homepage": "<%= repoUrl %>",
+  "devDependencies": {
+    "builder": "^2.9.1",
+    "builder-react-comp-dev": "git+https://github.com/olivierkastel/builder-react-comp-dev-0.6.git"
+  },
+  "dependencies": {
+    "builder-react-comp": "git+https://github.com/olivierkastel/builder-react-comp-master.git",
+    "react-tap-event-plugin": "^2.0.0",
+    "material-ui": "^0.15.0-beta.1"
+  }
+}
