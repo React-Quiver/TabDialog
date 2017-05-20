@@ -1,1 +1,14 @@
-<TabDialog text="Hello with Material-ui" />
+<TabDialog
+  open={false}
+  close={() => {console.log('close')}}
+  closeLabel={'Cancel'}
+  actionLabel={'save'}
+  title={'Edit my info'}
+>
+  <div
+    label={'Tab 1'}
+  />
+  <div
+    label={'Tab 2'}
+  />
+</TabDialog>

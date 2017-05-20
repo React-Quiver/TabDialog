@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "builder-react-comp": "git+https://github.com/olivierkastel/builder-react-comp-master.git",
-    "react-tap-event-plugin": "^2.0.0",
-    "material-ui": "^0.15.0-beta.1"
+    "material-ui": "^0.15.0-beta.1",
+    "react-swipeable-views": "^0.12.2",
+    "react-tap-event-plugin": "^2.0.0"
   }
 }
