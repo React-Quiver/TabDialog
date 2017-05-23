@@ -237,7 +237,9 @@ var TabDialog = function (_Component) {
           childCount = _state.childCount,
           actionIsDisabled = _state.actionIsDisabled,
           actionIsHidden = _state.actionIsHidden;
+      var muiTheme = this.context.muiTheme;
 
+      var palette = muiTheme ? muiTheme.rawTheme.palette : undefined;
 
       var actions = [];
 
@@ -257,7 +259,7 @@ var TabDialog = function (_Component) {
         label: closeLabel !== undefined ? closeLabel : 'Close',
         hoverColor: '#90A4AE',
         backgroundColor: '#CFD8DC',
-        style: { marginRight: '15px' },
+        style: { marginRight: '15px', color: 'white' },
         onTouchTap: this.close.bind(this),
         icon: closeIcon !== undefined ? closeIcon : React.createElement(Close, null),
         primary: true
@@ -273,8 +275,8 @@ var TabDialog = function (_Component) {
             display: actionIsHidden ? 'none' : undefined
           },
           disabled: actionIsDisabled,
-          backgroundColor: '#2196f3',
-          hoverColor: '#1976d2',
+          backgroundColor: palette ? palette.primary1Color : '#2196f3',
+          hoverColor: palette ? palette.primary3Color : '#1976d2',
           icon: actionIcon !== undefined ? actionIcon : React.createElement(Action, null),
           onTouchTap: this.action.bind(this)
         }));
@@ -292,7 +294,7 @@ var TabDialog = function (_Component) {
             open: open,
             onRequestClose: this.close.bind(this),
             contentStyle: { width: width || '70%', maxWidth: 'none', minWidth: width || 600 },
-            titleStyle: { color: 'white', background: '#2196f3' },
+            titleStyle: { color: 'white', background: palette ? palette.primary1Color : '#2196f3' },
             bodyStyle: { padding: 0 },
             title: title
           },
@@ -320,7 +322,7 @@ var TabDialog = function (_Component) {
                 Tabs,
                 {
                   inkBarStyle: { background: 'white' },
-                  tabItemContainerStyle: { background: '#333333' },
+                  tabItemContainerStyle: { background: palette ? palette.primary2Color : '#42a5f5' },
                   onChange: function onChange(value) {
                     _this2.setState({ slideIndex: value });
                   },
@@ -360,8 +362,8 @@ var TabDialog = function (_Component) {
               primary: true
             }), React.createElement(FlatButton, {
               label: 'Confirm',
-              backgroundColor: '#F44336',
-              hoverColor: '#D32F2F',
+              backgroundColor: palette ? palette.primary1Color : '#2196f3',
+              hoverColor: palette ? palette.primary3Color : '#1976d2',
               style: { marginRight: '15px', color: 'white' },
               onTouchTap: this.delete.bind(this)
             })],
