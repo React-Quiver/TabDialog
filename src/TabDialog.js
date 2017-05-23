@@ -14,8 +14,6 @@ import SwipeableViews from 'react-swipeable-views';
 
 export default class TabDialog extends Component {
   static propTypes = {
-    muiTheme: PropTypes.object,
-
     del: PropTypes.func,
     delLabel: PropTypes.string,
     delIcon: PropTypes.any,
@@ -33,6 +31,10 @@ export default class TabDialog extends Component {
     refresh: PropTypes.func,
     title: PropTypes.string,
     width: PropTypes.any,
+  };
+
+  static contextTypes = {
+    muiTheme: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -200,7 +202,6 @@ export default class TabDialog extends Component {
       action,
       actionLabel,
       width,
-      muiTheme,
     } = this.props;
     const { confirmDeleteOpen, childCount, actionIsDisabled, actionIsHidden } = this.state;
 
@@ -330,7 +331,7 @@ export default class TabDialog extends Component {
     );
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={this.context.muiTheme}>
         {JSX}
       </MuiThemeProvider>
     );

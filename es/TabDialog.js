@@ -374,9 +374,9 @@ var TabDialog = function (_Component) {
         )
       );
 
-      return this.context.muiTheme ? JSX : React.createElement(
+      return React.createElement(
         MuiThemeProvider,
-        null,
+        { muiTheme: this.context.muiTheme },
         JSX
       );
     }
@@ -403,5 +403,8 @@ TabDialog.propTypes = {
   refresh: PropTypes.func,
   title: PropTypes.string,
   width: PropTypes.any
+};
+TabDialog.contextTypes = {
+  muiTheme: PropTypes.object.isRequired
 };
 export default TabDialog;
