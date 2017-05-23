@@ -286,7 +286,7 @@ export default class TabDialog extends Component {
             : <div>
             <Tabs
               inkBarStyle = {{ background: 'white' }}
-              tabItemContainerStyle = {{ background: palette ? palette.primary2Color : '#42a5f5' }}
+              tabItemContainerStyle = {{ background: palette ? palette.primary3Color : '#42a5f5' }}
               onChange={(value) => { this.setState({ slideIndex: value });}}
               value={this.state.slideIndex}
             >

@@ -322,7 +322,7 @@ var TabDialog = function (_Component) {
                 Tabs,
                 {
                   inkBarStyle: { background: 'white' },
-                  tabItemContainerStyle: { background: palette ? palette.primary2Color : '#42a5f5' },
+                  tabItemContainerStyle: { background: palette ? palette.primary3Color : '#42a5f5' },
                   onChange: function onChange(value) {
                     _this2.setState({ slideIndex: value });
                   },
