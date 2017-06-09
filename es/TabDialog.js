@@ -288,6 +288,11 @@ var TabDialog = function (_Component) {
         React.createElement(
           Dialog,
           {
+            overlayStyle: {
+              backdropFilter: 'blur(20px) saturate(180%)',
+              webkitBackdropFilter: 'blur(20px) saturate(180%)',
+              background: 'rgba(255,255,255,0.7)'
+            },
             autoScrollBodyContent: true,
             actions: actions,
             modal: false,
@@ -353,6 +358,11 @@ var TabDialog = function (_Component) {
         React.createElement(
           Dialog,
           {
+            overlayStyle: {
+              backdropFilter: 'blur(20px) saturate(180%)',
+              webkitBackdropFilter: 'blur(20px) saturate(180%)',
+              background: 'rgba(255,255,255,0.7)'
+            },
             actions: [React.createElement(FlatButton, {
               label: 'Cancel',
               hoverColor: '#90A4AE',

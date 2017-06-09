@@ -258,6 +258,11 @@ export default class TabDialog extends Component {
     const JSX = (
       <div>
         <Dialog
+          overlayStyle={{
+            backdropFilter: 'blur(20px) saturate(180%)',
+            webkitBackdropFilter: 'blur(20px) saturate(180%)',
+            background: 'rgba(255,255,255,0.7)',
+          }}
           autoScrollBodyContent
           actions={actions}
           modal={false}
@@ -308,6 +313,11 @@ export default class TabDialog extends Component {
           </div>
         </Dialog>
         <Dialog
+          overlayStyle={{
+            backdropFilter: 'blur(20px) saturate(180%)',
+            webkitBackdropFilter: 'blur(20px) saturate(180%)',
+            background: 'rgba(255,255,255,0.7)',
+          }}
           actions={[
             <FlatButton
               label="Cancel"
