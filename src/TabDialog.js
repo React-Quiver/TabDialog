@@ -279,8 +279,8 @@ export default class TabDialog extends Component {
             display: actionIsHidden ? 'none' : undefined,
           }}
           disabled={actionIsDisabled}
-          backgroundColor={palette ? palette.accent1Color : '#2196f3'}
-          hoverColor={palette ? palette.accent3Color : '#1976d2'}
+          backgroundColor={'#2196f3'}
+          hoverColor={'#1976d2'}
           icon={ (actionIcon !== undefined) ? actionIcon : <Action />}
           onTouchTap={::this.action}
         />
