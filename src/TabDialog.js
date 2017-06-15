@@ -31,6 +31,9 @@ export default class TabDialog extends Component {
     refresh: PropTypes.func,
     title: PropTypes.string,
     width: PropTypes.any,
+
+    lightBlur: PropTypes.bool,
+    darkBlur: PropTypes.bool,
   };
 
   static contextTypes = {
@@ -189,6 +192,35 @@ export default class TabDialog extends Component {
     this.setState({ actionIsHidden: val });
   }
 
+  getBlur() {
+    const {
+      lightBlur,
+      darkBlur,
+    } = this.props;
+
+    if (lightBlur) {
+      return (
+        {
+          backdropFilter: 'blur(20px) saturate(180%)',
+          webkitBackdropFilter: 'blur(20px) saturate(180%)',
+          background: 'rgba(255,255,255,0.7)',
+        }
+      );
+    }
+
+    if (darkBlur) {
+      return (
+        {
+          backdropFilter: 'blur(20px) saturate(180%)',
+          webkitBackdropFilter: 'blur(20px) saturate(180%)',
+          background: 'rgba(0,0,0,0.7)',
+        }
+      );
+    }
+
+    return undefined;
+  }
+
   render() {
     const {
       open,
@@ -247,8 +279,8 @@ export default class TabDialog extends Component {
             display: actionIsHidden ? 'none' : undefined,
           }}
           disabled={actionIsDisabled}
-          backgroundColor={palette ? palette.primary1Color : '#2196f3'}
-          hoverColor={palette ? palette.primary3Color : '#1976d2'}
+          backgroundColor={palette ? palette.accent1Color : '#2196f3'}
+          hoverColor={palette ? palette.accent3Color : '#1976d2'}
           icon={ (actionIcon !== undefined) ? actionIcon : <Action />}
           onTouchTap={::this.action}
         />
@@ -258,11 +290,7 @@ export default class TabDialog extends Component {
     const JSX = (
       <div>
         <Dialog
-          overlayStyle={{
-            backdropFilter: 'blur(20px) saturate(180%)',
-            webkitBackdropFilter: 'blur(20px) saturate(180%)',
-            background: 'rgba(255,255,255,0.7)',
-          }}
+          overlayStyle={this.getBlur()}
           autoScrollBodyContent
           actions={actions}
           modal={false}
@@ -313,11 +341,7 @@ export default class TabDialog extends Component {
           </div>
         </Dialog>
         <Dialog
-          overlayStyle={{
-            backdropFilter: 'blur(20px) saturate(180%)',
-            webkitBackdropFilter: 'blur(20px) saturate(180%)',
-            background: 'rgba(255,255,255,0.7)',
-          }}
+          overlayStyle={this.getBlur()}
           actions={[
             <FlatButton
               label="Cancel"
