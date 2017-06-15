@@ -283,8 +283,8 @@ var TabDialog = function (_Component) {
 
       actions.push(React.createElement(FlatButton, {
         label: closeLabel !== undefined ? closeLabel : 'Close',
-        hoverColor: '#90A4AE',
-        backgroundColor: '#CFD8DC',
+        hoverColor: '#9e9e9e',
+        backgroundColor: '#bdbdbd',
         style: { marginRight: '15px', color: 'white' },
         onTouchTap: this.close.bind(this),
         icon: closeIcon !== undefined ? closeIcon : React.createElement(Close, null),
@@ -321,6 +321,7 @@ var TabDialog = function (_Component) {
             open: open,
             onRequestClose: this.close.bind(this),
             contentStyle: { width: width || '70%', maxWidth: 'none', minWidth: width || 600 },
+            actionsContainerStyle: { border: 'none' },
             titleStyle: { color: 'white', background: palette ? palette.primary1Color : '#2196f3' },
             bodyStyle: { padding: 0 },
             title: title
