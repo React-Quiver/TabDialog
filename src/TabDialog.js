@@ -315,7 +315,7 @@ export default class TabDialog extends Component {
             }}
           >
             {childCount === 1 ?
-              <div style={{ padding: 15 }}>
+              <div style={{ padding: 15, height: 'calc(100% - 30px)' }}>
                 {this.props.children ? this.getChildren() : null}
               </div>
             : <div>

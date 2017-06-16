@@ -342,7 +342,7 @@ var TabDialog = function (_Component) {
             },
             childCount === 1 ? React.createElement(
               'div',
-              { style: { padding: 15 } },
+              { style: { padding: 15, height: 'calc(100% - 30px)' } },
               this.props.children ? this.getChildren() : null
             ) : React.createElement(
               'div',
