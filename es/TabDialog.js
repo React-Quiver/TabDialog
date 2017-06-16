@@ -271,7 +271,7 @@ var TabDialog = function (_Component) {
 
       if (del) {
         actions.push(React.createElement(FlatButton, {
-          labelColor: 'white',
+          key: 'del',
           label: delLabel !== undefined ? delLabel : 'Delete',
           style: { color: 'white', float: 'left' },
           backgroundColor: '#F44336',
@@ -282,6 +282,7 @@ var TabDialog = function (_Component) {
       }
 
       actions.push(React.createElement(FlatButton, {
+        key: 'close',
         label: closeLabel !== undefined ? closeLabel : 'Close',
         hoverColor: '#9e9e9e',
         backgroundColor: '#bdbdbd',
@@ -293,7 +294,7 @@ var TabDialog = function (_Component) {
 
       if (action) {
         actions.push(React.createElement(FlatButton, {
-          labelColor: 'white',
+          key: 'create',
           label: actionLabel !== undefined ? actionLabel : 'Create',
           style: {
             color: 'white',
@@ -383,6 +384,7 @@ var TabDialog = function (_Component) {
           {
             overlayStyle: this.getBlur(),
             actions: [React.createElement(FlatButton, {
+              key: 'Cancel',
               label: 'Cancel',
               hoverColor: '#90A4AE',
               backgroundColor: '#CFD8DC',
@@ -390,6 +392,7 @@ var TabDialog = function (_Component) {
               onTouchTap: this.closeConfirmDelete.bind(this),
               primary: true
             }), React.createElement(FlatButton, {
+              key: 'Confirm',
               label: 'Confirm',
               backgroundColor: palette ? palette.primary1Color : '#2196f3',
               hoverColor: palette ? palette.primary3Color : '#1976d2',

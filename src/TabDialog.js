@@ -245,7 +245,7 @@ export default class TabDialog extends Component {
     if (del) {
       actions.push(
         <FlatButton
-          labelColor="white"
+          key={'del'}
           label={ (delLabel !== undefined) ? delLabel : 'Delete'}
           style={{ color: 'white', float: 'left' }}
           backgroundColor="#F44336"
@@ -258,6 +258,7 @@ export default class TabDialog extends Component {
 
     actions.push(
       <FlatButton
+        key={'close'}
         label={ (closeLabel !== undefined) ? closeLabel : 'Close'}
         hoverColor="#9e9e9e"
         backgroundColor="#bdbdbd"
@@ -271,7 +272,7 @@ export default class TabDialog extends Component {
     if (action) {
       actions.push(
         <FlatButton
-          labelColor="white"
+          key={'create'}
           label={ (actionLabel !== undefined) ? actionLabel : 'Create'}
           style={{
             color: 'white',
@@ -345,6 +346,7 @@ export default class TabDialog extends Component {
           overlayStyle={this.getBlur()}
           actions={[
             <FlatButton
+              key={'Cancel'}
               label="Cancel"
               hoverColor="#90A4AE"
               backgroundColor="#CFD8DC"
@@ -353,6 +355,7 @@ export default class TabDialog extends Component {
               primary
             />,
             <FlatButton
+              key={'Confirm'}
               label="Confirm"
               backgroundColor={palette ? palette.primary1Color : '#2196f3'}
               hoverColor={palette ? palette.primary3Color : '#1976d2'}
