@@ -342,7 +342,7 @@ var TabDialog = function (_Component) {
             },
             childCount === 1 ? React.createElement(
               'div',
-              { style: { padding: 15, height: 'calc(100% - 30px)' } },
+              null,
               this.props.children ? this.getChildren() : null
             ) : React.createElement(
               'div',
@@ -361,9 +361,7 @@ var TabDialog = function (_Component) {
               ),
               React.createElement(
                 'div',
-                {
-                  style: { padding: 15, minHeight: 600 }
-                },
+                null,
                 React.createElement(
                   SwipeableViews,
                   {

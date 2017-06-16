@@ -315,7 +315,7 @@ export default class TabDialog extends Component {
             }}
           >
             {childCount === 1 ?
-              <div style={{ padding: 15, height: 'calc(100% - 30px)' }}>
+              <div>
                 {this.props.children ? this.getChildren() : null}
               </div>
             : <div>
@@ -327,9 +327,7 @@ export default class TabDialog extends Component {
             >
                 {this.getTabs()}
             </Tabs>
-              <div
-                style={{ padding: 15, minHeight: 600 }}
-              >
+              <div>
                 <SwipeableViews
                   style={{ height: '100%' }}
                   index={this.state.slideIndex}
