@@ -17,10 +17,10 @@ import FlatButton from 'material-ui/FlatButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Action from 'material-ui/svg-icons/action/done';
-import { Tabs, Tab } from 'material-ui/Tabs';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-// open source
-import SwipeableViews from 'react-swipeable-views';
+// styles
+import styles from './styles';
 
 var TabDialog = function (_Component) {
   _inherits(TabDialog, _Component);
@@ -37,38 +37,74 @@ var TabDialog = function (_Component) {
       childCount: _this.props.children.length || 1,
       callbackReceived: 0,
       actionIsDisabled: false,
-      actionIsHidden: false
+      actionIsHidden: false,
+      stepIndex: 0
     };
     return _this;
   }
 
   _createClass(TabDialog, [{
+    key: 'getItemSelected',
+    value: function getItemSelected(color) {
+      return {
+        fontSize: '16px',
+        lineHeight: '50px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        cursor: 'pointer',
+        color: color || 'black',
+        overflowY: 'hidden',
+        borderBottom: color ? 'solid 2px ' + color : 'solid 2px black'
+      };
+    }
+  }, {
     key: 'getTabs',
     value: function getTabs() {
+      var _this2 = this;
+
+      var stepIndex = this.state.stepIndex;
+
+      console.log(stepIndex);
       var childs = this.props.children;
       var JSX = [];
       var i = 0;
 
       if (childs.length) {
-        for (var k in childs) {
+        var _loop = function _loop(k) {
           if (childs.hasOwnProperty(k)) {
             var child = childs[k];
-            JSX.push(React.createElement(Tab, {
-              key: k,
-              label: child.props.label,
-              value: i
-            }));
+            JSX.push(React.createElement(
+              'div',
+              {
+                key: k,
+                style: stepIndex === k ? _this2.getItemSelected(child.props.color) : styles.menuItem,
+                onClick: function onClick() {
+                  _this2.setState({ stepIndex: k });
+                }
+              },
+              child.props.label || 'Tab ' + k
+            ));
             i++;
           }
 
-          this.state.childCount = i;
+          _this2.state.childCount = i;
+        };
+
+        for (var k in childs) {
+          _loop(k);
         }
       } else {
-        JSX.push(React.createElement(Tab, {
-          key: 1,
-          label: childs.props.label,
-          value: i
-        }));
+        JSX.push(React.createElement(
+          'div',
+          {
+            key: 0,
+            style: stepIndex === 0 ? this.getItemSelected(childs.props.color) : styles.menuItem,
+            onClick: function onClick() {
+              _this2.setState({ stepIndex: 0 });
+            }
+          },
+          childs.props.label
+        ));
 
         this.state.childCount = 1;
       }
@@ -77,32 +113,23 @@ var TabDialog = function (_Component) {
   }, {
     key: 'getChildren',
     value: function getChildren() {
-      var childs = this.props.children;
-      var JSX = [];
+      var _state = this.state,
+          stepIndex = _state.stepIndex,
+          childCount = _state.childCount;
 
-      if (childs.length) {
-        for (var k in childs) {
-          if (childs.hasOwnProperty(k)) {
-            var child = childs[k];
-            var childWithProps = React.cloneElement(child, {
-              ref: 'component' + k,
-              callback: this.callback.bind(this)
-            });
-            JSX.push(childWithProps);
-          }
-        }
-      } else {
-        var _childWithProps = React.cloneElement(childs, {
-          ref: 'component1',
-          callback: this.callback.bind(this),
-          setActionIsDisabled: this.setActionIsDisabled.bind(this),
-          setActionIsHidden: this.setActionIsHidden.bind(this),
-          close: this.props.close
-        });
-        JSX.push(_childWithProps);
+      var child = this.props.children;
+      if (childCount > 1) {
+        child = child[stepIndex];
       }
+      var childWithProps = React.cloneElement(child, {
+        ref: 'component' + stepIndex,
+        callback: this.callback.bind(this),
+        setActionIsDisabled: this.setActionIsDisabled.bind(this),
+        setActionIsHidden: this.setActionIsHidden.bind(this),
+        close: this.props.close
+      });
 
-      return JSX;
+      return childWithProps;
     }
   }, {
     key: 'openConfirmDelete',
@@ -242,9 +269,35 @@ var TabDialog = function (_Component) {
       return undefined;
     }
   }, {
+    key: 'getHeight',
+    value: function getHeight(showTitle, showTabMenu) {
+      if (showTitle && showTabMenu) {
+        return 98;
+      }
+
+      if (showTitle) {
+        return 68;
+      }
+
+      return 48;
+    }
+  }, {
+    key: 'getPadding',
+    value: function getPadding(showTitle, showTabMenu) {
+      if (showTitle && showTabMenu) {
+        return 88;
+      }
+
+      if (showTitle) {
+        return 48;
+      }
+
+      return 0;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _props4 = this.props,
           open = _props4.open,
@@ -258,14 +311,17 @@ var TabDialog = function (_Component) {
           action = _props4.action,
           actionLabel = _props4.actionLabel,
           width = _props4.width;
-      var _state = this.state,
-          confirmDeleteOpen = _state.confirmDeleteOpen,
-          childCount = _state.childCount,
-          actionIsDisabled = _state.actionIsDisabled,
-          actionIsHidden = _state.actionIsHidden;
+      var _state2 = this.state,
+          confirmDeleteOpen = _state2.confirmDeleteOpen,
+          childCount = _state2.childCount,
+          actionIsDisabled = _state2.actionIsDisabled,
+          actionIsHidden = _state2.actionIsHidden;
       var muiTheme = this.context.muiTheme;
 
       var palette = muiTheme ? muiTheme.rawTheme.palette : undefined;
+
+      var showTabMenu = this.state.childCount > 1 || this.props.children.props.label;
+      var showTitle = this.props.title;
 
       var actions = [];
 
@@ -324,56 +380,69 @@ var TabDialog = function (_Component) {
             contentStyle: { width: width || '70%', maxWidth: 'none', minWidth: width || 600 },
             actionsContainerStyle: { border: 'none' },
             titleStyle: { color: 'white', background: palette ? palette.primary1Color : '#2196f3' },
-            bodyStyle: { padding: 0 },
-            title: title
+            bodyStyle: { padding: 0 }
           },
           React.createElement(
             'div',
             {
+              style: { padding: 20 },
               onKeyPress: function onKeyPress(e) {
                 if (e.key === 'Enter') {
-                  if (_this2.props.action) {
-                    _this2.action.call(_this2);
+                  if (_this3.props.action) {
+                    _this3.action.call(_this3);
                   } else {
-                    _this2.close.call(_this2);
+                    _this3.close.call(_this3);
                   }
                 }
               }
             },
-            childCount === 1 ? React.createElement(
-              'div',
-              null,
-              this.props.children ? this.getChildren() : null
-            ) : React.createElement(
-              'div',
-              null,
-              React.createElement(
-                Tabs,
+            showTitle || showTabMenu ? React.createElement(
+              Toolbar,
+              {
+                style: {
+                  borderBottom: '1px solid #aaaaaa',
+                  height: this.getHeight(showTitle, showTabMenu),
+                  width: '100%',
+                  position: 'fixed',
+                  overflowY: 'scroll',
+                  zIndex: 100000,
+                  marginTop: -40,
+                  marginLeft: -20,
+                  paddingTop: showTitle ? 55 : 20,
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  webkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  background: 'rgba(255,255,255,0.8)'
+                }
+              },
+              showTitle ? React.createElement(
+                'div',
                 {
-                  inkBarStyle: { background: 'white' },
-                  tabItemContainerStyle: { background: palette ? palette.primary3Color : '#42a5f5' },
-                  onChange: function onChange(value) {
-                    _this2.setState({ slideIndex: value });
-                  },
-                  value: this.state.slideIndex
+                  style: {
+                    color: 'black',
+                    fontSize: 26,
+                    fontWeight: 600,
+                    position: 'absolute',
+                    top: 20,
+                    left: 20
+                  }
                 },
-                this.getTabs()
-              ),
-              React.createElement(
+                this.props.title
+              ) : null,
+              showTabMenu ? React.createElement(
                 'div',
                 null,
                 React.createElement(
-                  SwipeableViews,
-                  {
-                    style: { height: '100%' },
-                    index: this.state.slideIndex,
-                    onChange: function onChange(value) {
-                      _this2.setState({ slideIndex: value });
-                    }
-                  },
-                  this.props.children ? this.getChildren() : null
-                )
-              )
+                  ToolbarGroup,
+                  { firstChild: true, style: { marginLeft: '-10px' } },
+                  this.getTabs()
+                ),
+                React.createElement(ToolbarGroup, { lastChild: true })
+              ) : null
+            ) : null,
+            React.createElement(
+              'div',
+              { style: { paddingTop: this.getPadding(showTitle, showTabMenu) } },
+              this.getChildren()
             )
           )
         ),

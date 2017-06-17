@@ -7,10 +7,10 @@ import FlatButton from 'material-ui/FlatButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Action from 'material-ui/svg-icons/action/done';
-import { Tabs, Tab } from 'material-ui/Tabs';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-// open source
-import SwipeableViews from 'react-swipeable-views';
+// styles
+import styles from './styles';
 
 export default class TabDialog extends Component {
   static propTypes = {
@@ -50,10 +50,28 @@ export default class TabDialog extends Component {
       callbackReceived: 0,
       actionIsDisabled: false,
       actionIsHidden: false,
+      stepIndex: 0,
     };
   }
 
+  getItemSelected(color) {
+    return (
+      {
+        fontSize: '16px',
+        lineHeight: '50px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        cursor: 'pointer',
+        color: color || 'black',
+        overflowY: 'hidden',
+        borderBottom: color ? `solid 2px ${color}` : 'solid 2px black',
+      }
+    );
+  }
+
   getTabs() {
+    const { stepIndex } = this.state;
+    console.log(stepIndex);
     const childs = this.props.children;
     const JSX = [];
     let i = 0;
@@ -63,11 +81,13 @@ export default class TabDialog extends Component {
         if (childs.hasOwnProperty(k)) {
           const child = childs[k];
           JSX.push(
-            <Tab
+            <div
               key={k}
-              label={child.props.label}
-              value={i}
-            />
+              style={stepIndex === k ? this.getItemSelected(child.props.color) : styles.menuItem}
+              onClick={() => { this.setState({ stepIndex: k }); }}
+            >
+              {child.props.label || `Tab ${k}`}
+            </div>
           );
           i ++;
         }
@@ -76,11 +96,13 @@ export default class TabDialog extends Component {
       }
     } else {
       JSX.push(
-        <Tab
-          key={1}
-          label={childs.props.label}
-          value={i}
-        />
+        <div
+          key={0}
+          style={stepIndex === 0 ? this.getItemSelected(childs.props.color) : styles.menuItem}
+          onClick={() => { this.setState({ stepIndex: 0 }); }}
+        >
+          {childs.props.label}
+        </div>
       );
 
       this.state.childCount = 1;
@@ -89,33 +111,21 @@ export default class TabDialog extends Component {
   }
 
   getChildren() {
-    const childs = this.props.children;
-    const JSX = [];
-
-    if (childs.length) {
-      for (const k in childs) {
-        if (childs.hasOwnProperty(k)) {
-          const child = childs[k];
-          const childWithProps = React.cloneElement(child,
-            {
-              ref: `component${k}`,
-              callback: ::this.callback,
-            });
-          JSX.push(childWithProps);
-        }
-      }
-    } else {
-      const childWithProps = React.cloneElement(childs, {
-        ref: 'component1',
+    const { stepIndex, childCount } = this.state;
+    let child = this.props.children;
+    if (childCount > 1) {
+      child = child[stepIndex];
+    }
+    const childWithProps = React.cloneElement(child,
+      {
+        ref: `component${stepIndex}`,
         callback: ::this.callback,
         setActionIsDisabled: ::this.setActionIsDisabled,
         setActionIsHidden: ::this.setActionIsHidden,
         close: this.props.close,
       });
-      JSX.push(childWithProps);
-    }
 
-    return JSX;
+    return (childWithProps);
   }
 
   openConfirmDelete() {
@@ -221,6 +231,30 @@ export default class TabDialog extends Component {
     return undefined;
   }
 
+  getHeight(showTitle, showTabMenu) {
+    if (showTitle && showTabMenu) {
+      return 98;
+    }
+
+    if (showTitle) {
+      return 68;
+    }
+
+    return 48;
+  }
+
+  getPadding(showTitle, showTabMenu) {
+    if (showTitle && showTabMenu) {
+      return 88;
+    }
+
+    if (showTitle) {
+      return 48;
+    }
+
+    return 0;
+  }
+
   render() {
     const {
       open,
@@ -235,10 +269,19 @@ export default class TabDialog extends Component {
       actionLabel,
       width,
     } = this.props;
-    const { confirmDeleteOpen, childCount, actionIsDisabled, actionIsHidden } = this.state;
+
+    const {
+      confirmDeleteOpen,
+      childCount,
+      actionIsDisabled,
+      actionIsHidden,
+    } = this.state;
 
     const { muiTheme } = this.context;
     const palette = muiTheme ? muiTheme.rawTheme.palette : undefined;
+
+    const showTabMenu = (this.state.childCount > 1) || (this.props.children.props.label);
+    const showTitle = this.props.title;
 
     const actions = [];
 
@@ -301,9 +344,9 @@ export default class TabDialog extends Component {
           actionsContainerStyle = {{ border: 'none' }}
           titleStyle={{ color: 'white', background: palette ? palette.primary1Color : '#2196f3' }}
           bodyStyle={{ padding: 0 }}
-          title={title}
         >
           <div
+            style={{ padding: 20 }}
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 if (this.props.action) {
@@ -314,31 +357,54 @@ export default class TabDialog extends Component {
               }
             }}
           >
-            {childCount === 1 ?
-              <div>
-                {this.props.children ? this.getChildren() : null}
-              </div>
-            : <div>
-            <Tabs
-              inkBarStyle = {{ background: 'white' }}
-              tabItemContainerStyle = {{ background: palette ? palette.primary3Color : '#42a5f5' }}
-              onChange={(value) => { this.setState({ slideIndex: value });}}
-              value={this.state.slideIndex}
+          {
+            showTitle || showTabMenu ?
+            <Toolbar
+              style={{
+                borderBottom: '1px solid #aaaaaa',
+                height: this.getHeight(showTitle, showTabMenu),
+                width: '100%',
+                position: 'fixed',
+                overflowY: 'scroll',
+                zIndex: 100000,
+                marginTop: -40,
+                marginLeft: -20,
+                paddingTop: showTitle ? 55 : 20,
+                backdropFilter: 'blur(20px) saturate(180%)',
+                webkitBackdropFilter: 'blur(20px) saturate(180%)',
+                background: 'rgba(255,255,255,0.8)',
+              }}
             >
-                {this.getTabs()}
-            </Tabs>
-              <div>
-                <SwipeableViews
-                  style={{ height: '100%' }}
-                  index={this.state.slideIndex}
-                  onChange={(value) => {this.setState({ slideIndex: value });}}
-                >
-                  {this.props.children ? this.getChildren() : null}
-                </SwipeableViews>
+            {
+              showTitle ?
+              <div
+                style={{
+                  color: 'black',
+                  fontSize: 26,
+                  fontWeight: 600,
+                  position: 'absolute',
+                  top: 20,
+                  left: 20,
+                }}
+              >
+                {this.props.title}
+              </div> : null
+              }
+              {
+                 showTabMenu ?
+                 <div>
+                   <ToolbarGroup firstChild style={{ marginLeft: '-10px' }}>
+                     {this.getTabs()}
+                   </ToolbarGroup>
+                   <ToolbarGroup lastChild />
+                  </div> : null
+              }
+            </Toolbar> : null
+          }
+              <div style={{ paddingTop: this.getPadding(showTitle, showTabMenu) }}>
+                {this.getChildren()}
               </div>
             </div>
-            }
-          </div>
         </Dialog>
         <Dialog
           overlayStyle={this.getBlur()}

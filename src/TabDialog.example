@@ -6,9 +6,9 @@
   title={'Edit my info'}
 >
   <div
-    label={'Tab 1'}
-  />
-  <div
-    label={'Tab 2'}
-  />
+    color={'#673ab7'}
+    style={{ background: 'red' }}
+  >
+  	Hello
+  </div>
 </TabDialog>
