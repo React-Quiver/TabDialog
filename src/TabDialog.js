@@ -233,7 +233,7 @@ export default class TabDialog extends Component {
 
   getHeight(showTitle, showTabMenu) {
     if (showTitle && showTabMenu) {
-      return 98;
+      return 108;
     }
 
     if (showTitle) {
@@ -245,7 +245,7 @@ export default class TabDialog extends Component {
 
   getPadding(showTitle, showTabMenu) {
     if (showTitle && showTabMenu) {
-      return 88;
+      return 100;
     }
 
     if (showTitle) {

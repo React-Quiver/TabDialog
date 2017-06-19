@@ -1,13 +1,22 @@
 <TabDialog
-  open={false}
+  open={true}
   close={() => {console.log('close')}}
   closeLabel={'Cancel'}
   actionLabel={'save'}
   title={'Edit my info'}
 >
   <div
-    color={'#673ab7'}
-    style={{ background: 'red' }}
+    label={'Hello'}
+  >
+  	Hello
+  </div>
+  <div
+    label={'Hello'}
+  >
+  	Hello
+  </div>
+  <div
+    label={'Hello'}
   >
   	Hello
   </div>
