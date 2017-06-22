@@ -63,7 +63,6 @@ export default class TabDialog extends Component {
         paddingRight: '15px',
         cursor: 'pointer',
         color: color || 'black',
-        overflowY: 'hidden',
         borderBottom: color ? `solid 2px ${color}` : 'solid 2px black',
       }
     );
@@ -245,11 +244,11 @@ export default class TabDialog extends Component {
 
   getPadding(showTitle, showTabMenu) {
     if (showTitle && showTabMenu) {
-      return 100;
+      return 120;
     }
 
     if (showTitle) {
-      return 48;
+      return 68;
     }
 
     return 0;
@@ -367,7 +366,7 @@ export default class TabDialog extends Component {
                 position: 'fixed',
                 overflowY: 'scroll',
                 zIndex: 100000,
-                marginTop: -40,
+                marginTop: -20,
                 marginLeft: -20,
                 paddingTop: showTitle ? 55 : 20,
                 backdropFilter: 'blur(20px) saturate(180%)',
@@ -392,7 +391,7 @@ export default class TabDialog extends Component {
               }
               {
                  showTabMenu ?
-                 <div>
+                 <div style={{ overflow: 'scroll' }}>
                    <ToolbarGroup firstChild style={{ marginLeft: '-10px' }}>
                      {this.getTabs()}
                    </ToolbarGroup>

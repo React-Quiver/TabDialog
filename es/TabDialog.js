@@ -53,7 +53,6 @@ var TabDialog = function (_Component) {
         paddingRight: '15px',
         cursor: 'pointer',
         color: color || 'black',
-        overflowY: 'hidden',
         borderBottom: color ? 'solid 2px ' + color : 'solid 2px black'
       };
     }
@@ -285,11 +284,11 @@ var TabDialog = function (_Component) {
     key: 'getPadding',
     value: function getPadding(showTitle, showTabMenu) {
       if (showTitle && showTabMenu) {
-        return 100;
+        return 120;
       }
 
       if (showTitle) {
-        return 48;
+        return 68;
       }
 
       return 0;
@@ -406,7 +405,7 @@ var TabDialog = function (_Component) {
                   position: 'fixed',
                   overflowY: 'scroll',
                   zIndex: 100000,
-                  marginTop: -40,
+                  marginTop: -20,
                   marginLeft: -20,
                   paddingTop: showTitle ? 55 : 20,
                   backdropFilter: 'blur(20px) saturate(180%)',
@@ -430,7 +429,7 @@ var TabDialog = function (_Component) {
               ) : null,
               showTabMenu ? React.createElement(
                 'div',
-                null,
+                { style: { overflow: 'scroll' } },
                 React.createElement(
                   ToolbarGroup,
                   { firstChild: true, style: { marginLeft: '-10px' } },
