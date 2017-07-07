@@ -18,7 +18,6 @@ import Delete from 'material-ui/svg-icons/action/delete';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Action from 'material-ui/svg-icons/action/done';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
 // styles
 import styles from './styles';
