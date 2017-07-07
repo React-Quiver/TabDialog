@@ -8,6 +8,7 @@ import Delete from 'material-ui/svg-icons/action/delete';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Action from 'material-ui/svg-icons/action/done';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
 // styles
 import styles from './styles';
@@ -50,6 +51,7 @@ export default class TabDialog extends Component {
       callbackReceived: 0,
       actionIsDisabled: false,
       actionIsHidden: false,
+      closeIsHidden: false,
       stepIndex: 0,
     };
   }
@@ -121,6 +123,7 @@ export default class TabDialog extends Component {
         callback: ::this.callback,
         setActionIsDisabled: ::this.setActionIsDisabled,
         setActionIsHidden: ::this.setActionIsHidden,
+        setCloseIsHidden: ::this.setCloseIsHidden,
         close: this.props.close,
       });
 
@@ -133,6 +136,10 @@ export default class TabDialog extends Component {
 
   closeConfirmDelete() {
     this.setState({ confirmDeleteOpen: false });
+  }
+
+  setCloseIsHidden(val) {
+    this.setState({ closeIsHidden: val });
   }
 
   callback(hasChanged) {
@@ -274,6 +281,7 @@ export default class TabDialog extends Component {
       childCount,
       actionIsDisabled,
       actionIsHidden,
+      closeIsHidden,
     } = this.state;
 
     const { muiTheme } = this.context;
@@ -304,7 +312,11 @@ export default class TabDialog extends Component {
         label={ (closeLabel !== undefined) ? closeLabel : 'Close'}
         hoverColor="#9e9e9e"
         backgroundColor="#bdbdbd"
-        style={{ marginRight: '15px', color: 'white' }}
+        style={{
+          marginRight: '15px',
+          color: 'white',
+          display: closeIsHidden ? 'none' : undefined,
+        }}
         onTouchTap={::this.close}
         icon={ (closeIcon !== undefined) ? closeIcon : <Close />}
         primary

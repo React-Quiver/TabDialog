@@ -18,6 +18,7 @@ import Delete from 'material-ui/svg-icons/action/delete';
 import Close from 'material-ui/svg-icons/navigation/close';
 import Action from 'material-ui/svg-icons/action/done';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
 // styles
 import styles from './styles';
@@ -38,6 +39,7 @@ var TabDialog = function (_Component) {
       callbackReceived: 0,
       actionIsDisabled: false,
       actionIsHidden: false,
+      closeIsHidden: false,
       stepIndex: 0
     };
     return _this;
@@ -125,6 +127,7 @@ var TabDialog = function (_Component) {
         callback: this.callback.bind(this),
         setActionIsDisabled: this.setActionIsDisabled.bind(this),
         setActionIsHidden: this.setActionIsHidden.bind(this),
+        setCloseIsHidden: this.setCloseIsHidden.bind(this),
         close: this.props.close
       });
 
@@ -139,6 +142,11 @@ var TabDialog = function (_Component) {
     key: 'closeConfirmDelete',
     value: function closeConfirmDelete() {
       this.setState({ confirmDeleteOpen: false });
+    }
+  }, {
+    key: 'setCloseIsHidden',
+    value: function setCloseIsHidden(val) {
+      this.setState({ closeIsHidden: val });
     }
   }, {
     key: 'callback',
@@ -314,7 +322,8 @@ var TabDialog = function (_Component) {
           confirmDeleteOpen = _state2.confirmDeleteOpen,
           childCount = _state2.childCount,
           actionIsDisabled = _state2.actionIsDisabled,
-          actionIsHidden = _state2.actionIsHidden;
+          actionIsHidden = _state2.actionIsHidden,
+          closeIsHidden = _state2.closeIsHidden;
       var muiTheme = this.context.muiTheme;
 
       var palette = muiTheme ? muiTheme.rawTheme.palette : undefined;
@@ -341,7 +350,11 @@ var TabDialog = function (_Component) {
         label: closeLabel !== undefined ? closeLabel : 'Close',
         hoverColor: '#9e9e9e',
         backgroundColor: '#bdbdbd',
-        style: { marginRight: '15px', color: 'white' },
+        style: {
+          marginRight: '15px',
+          color: 'white',
+          display: closeIsHidden ? 'none' : undefined
+        },
         onTouchTap: this.close.bind(this),
         icon: closeIcon !== undefined ? closeIcon : React.createElement(Close, null),
         primary: true
