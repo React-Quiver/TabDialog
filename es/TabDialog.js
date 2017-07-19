@@ -124,6 +124,7 @@ var TabDialog = function (_Component) {
       var childWithProps = React.cloneElement(child, {
         ref: 'component' + stepIndex,
         callback: this.callback.bind(this),
+        redraw: this.redraw.bind(this),
         setActionIsDisabled: this.setActionIsDisabled.bind(this),
         setActionIsHidden: this.setActionIsHidden.bind(this),
         setCloseIsHidden: this.setCloseIsHidden.bind(this),
@@ -299,6 +300,11 @@ var TabDialog = function (_Component) {
       }
 
       return 0;
+    }
+  }, {
+    key: 'redraw',
+    value: function redraw() {
+      this.forceUpdate();
     }
   }, {
     key: 'render',

@@ -120,6 +120,7 @@ export default class TabDialog extends Component {
       {
         ref: `component${stepIndex}`,
         callback: ::this.callback,
+        redraw: ::this.redraw,
         setActionIsDisabled: ::this.setActionIsDisabled,
         setActionIsHidden: ::this.setActionIsHidden,
         setCloseIsHidden: ::this.setCloseIsHidden,
@@ -258,6 +259,10 @@ export default class TabDialog extends Component {
     }
 
     return 0;
+  }
+
+  redraw() {
+    this.forceUpdate();
   }
 
   render() {
